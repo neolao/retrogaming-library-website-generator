@@ -3,6 +3,7 @@ import argparse
 import json
 import shutil
 from pathlib import Path
+from typing import Optional, Set
 
 
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".gif"}
@@ -37,7 +38,7 @@ def copy_folder(src: Path, dest: Path, overwrite: bool) -> None:
         shutil.copy2(item, target)
 
 
-def select_media_file(game_dir: Path, extensions: set[str], preferred_stems: set[str]) -> str | None:
+def select_media_file(game_dir: Path, extensions: Set[str], preferred_stems: Set[str]) -> Optional[str]:
     candidates = []
     for item in game_dir.rglob("*"):
         if not item.is_file():
@@ -63,7 +64,7 @@ def ensure_game_json(game_dir: Path) -> None:
 
     cover = select_media_file(game_dir, IMAGE_EXTENSIONS, {"cover", "box", "front"})
     video = select_media_file(game_dir, VIDEO_EXTENSIONS, {"video", "trailer", "preview"})
-    data: dict[str, object] = {"title": safe_game_title(game_dir.name)}
+    data = {"title": safe_game_title(game_dir.name)}
     if cover:
         data["cover"] = cover
     if video:

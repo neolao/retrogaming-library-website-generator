@@ -5,6 +5,7 @@ import shutil
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
+from typing import Optional
 
 
 ROM_EXTENSIONS = {
@@ -53,7 +54,7 @@ def read_game_json(path: Path) -> dict:
         return {}
 
 
-def resolve_media_path(game_dir: Path, media_value: str | None) -> Path | None:
+def resolve_media_path(game_dir: Path, media_value: Optional[str]) -> Optional[Path]:
     if not media_value:
         return None
     media_path = (game_dir / media_value).resolve()
