@@ -1,0 +1,4 @@
+@eaDir
+.DS_Store
+library/
+!library/README.md
